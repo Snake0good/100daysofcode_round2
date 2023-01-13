@@ -35,20 +35,14 @@ def generate_password():
 def save():
     website = website_entry.get()
     email = email_entry.get()
-    # password = password_entry.get()
+    password = password_entry.get()
 
-    # encrypt the password
-    from cryptography.fernet import Fernet
-    key = Fernet.generate_key()
-    f = Fernet(key)
-    encrypted_pass = f.encrypt(bytes(password_entry.get(), 'utf-8'))
-
-    if len(encrypted_pass) == 0 or len(website) == 0:
+    if len(password) == 0 or len(website) == 0:
         messagebox.showwarning(title="Empty fields",
                                message="Plese fill out all fields")
-    elif messagebox.askokcancel(title=website, message=f"You've entered: \nEmail: {email}\nPassword: --Encrypted--" f"\nIs it OK to save?"):
+    elif messagebox.askokcancel(title=website, message=f"You've entered: \nEmail: {email}\nPassword: {password}" f"\nIs it OK to save?"):
         with open("saved_passwords.txt", mode="a") as file:
-            file.write(f"{website} | {email} | {encrypted_pass}\n")
+            file.write(f"{website} | {email} | {password}\n")
             website_entry.delete(0, END)
             password_entry.delete(0, END)
             email_entry.delete(0, END)
